@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="configApi">
+ <select id="selectList" resultType="kr.ac.knou.ConfigApi" >
+        SELECT *
+          FROM config_api
+ </select>
+ 
+ <insert id="insert" parameterType="kr.ac.knou.ConfigApi">
+ 	insert into config_api(id,title,type,apiKey,url,clientId,clientSecret,created)
+ 	values  (#{id}, #{title},#{type},#{apiKey},#{url},#{clientId},#{clientSecret},now())
+ </insert>
+ 
+ <select id="read" parameterType="String" resultType="kr.ac.knou.ConfigApi" >
+ 	select id,title,type,apiKey,url,clientId,clientSecret,created from config_api where id=#{id}
+ </select>
+ 
+ <select id="selectAttr" parameterType="String" resultType="Object" >
+        SELECT attr FROM config_api where id=#{id}
+ </select>
+ 
+ <update id="update" parameterType="kr.ac.knou.ConfigApi">
+        UPDATE config_api
+           SET title=#{title}
+             , type=#{type}
+             , url=#{url}
+         WHERE id=#{id}
+  </update> 
+  
+  <update id="updateAttr" parameterType="hashmap">
+        UPDATE config_api
+           SET attr=#{attr} where id=#{id}
+ </update>
+</mapper>
